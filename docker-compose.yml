@@ -1,0 +1,21 @@
+services:
+  fnos-cleaner:
+    build: .
+    container_name: fnos-cleaner
+    restart: unless-stopped
+    ports:
+      - "7878:7878"
+    volumes:
+      # Docker socket —— 用于扫描和清理 Docker 资源
+      - /var/run/docker.sock:/var/run/docker.sock
+      # 飞牛 NAS 存储空间挂载（按实际路径修改）
+      - /vol1:/host/vol1:ro
+      - /vol2:/host/vol2:ro
+      # 持久化数据（SQLite 库）
+      - ./data:/data
+      # 清理报告输出
+      - ./reports:/reports
+      # 配置文件
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      - TZ=Asia/Shanghai

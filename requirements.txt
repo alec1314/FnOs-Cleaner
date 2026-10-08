@@ -1,0 +1,5 @@
+flask==3.1.*
+gunicorn==23.0.*
+docker==7.1.*
+APScheduler==3.10.*
+PyYAML==6.0.*

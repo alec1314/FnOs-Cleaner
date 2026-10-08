@@ -1,0 +1,74 @@
+# ============================================
+# fnos-cleaner 配置文件（安全默认值）
+# 复制为 config.yaml 后按实际情况修改
+# 原则：宁可少删，不可删错
+# ============================================
+
+web:
+  port: 7878
+  password: ""  # 留空关闭认证
+
+# 定时任务：默认关闭，开启后也只跑 dry-run
+schedule:
+  enabled: false          # 先手动跑几次确认安全后再开
+  cron: "0 3 * * 0"
+
+# 安全阈值
+safety:
+  max_file_size_gb: 10   # 单文件超过此大小直接跳过
+  dry_run_default: true  # 永远默认先预览
+
+# ============================================
+# 各模块配置
+# ============================================
+
+modules:
+
+  # ---- Docker 资源 ----
+  docker_prune:
+    enabled: true
+    # 停止的容器：只报告，不自动删（用户可能故意停着备用）
+    report_stopped_containers: true
+    # 悬空镜像 <none>:<none>：可安全清理
+    clean_dangling_images: true
+    # 悬空卷：只报告，不自动删（卷里可能有数据）
+    report_dangling_volumes: true
+    # 是否允许删除悬空卷（默认 false，极谨慎才开）
+    allow_volume_delete: false
+    # 未使用的网络：可安全清理
+    clean_unused_networks: true
+
+  # ---- 下载工具残留 ----
+  download_residue:
+    enabled: true
+    # 改成你实际的下载目录路径
+    scan_paths:
+      - /host/vol1/1000/docker/qbittorrent
+      - /host/vol2/1000/docker/qbittorrent
+    temp_patterns:
+      - "*.!qB"        # qBittorrent 未完成下载
+      - "*.part"
+      - "*.unwanted"
+      - "*.torrent"
+    keep_days: 7       # 超过 7 天才考虑清理
+
+  # ---- 回收站 + 旧日志 ----
+  trash_log:
+    enabled: true
+    # 回收站：只报告大小，不自动清空（用户可能要恢复）
+    trash_paths:
+      - /host/vol1/1000/@recycle
+    # 旧日志：只删 .gz 和 rotated 的
+    log_paths:
+      - /host/vol1/1000/docker
+    log_patterns:
+      - "*.log.*.gz"
+      - "*.log.[0-9]"
+    keep_days: 30      # 旧日志保留 30 天
+
+  # ---- 媒体缓存 ----
+  media_cache:
+    enabled: true
+    # 这些路径需要你在实际 NAS 上确认后再填
+    cache_paths: []
+    keep_days: 30
