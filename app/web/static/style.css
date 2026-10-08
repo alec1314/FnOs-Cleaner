@@ -1,0 +1,164 @@
+/* ===== 基础 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f6fa;
+    color: #2d3436;
+    line-height: 1.6;
+}
+
+/* ===== 顶栏 ===== */
+.topbar {
+    background: #2d3436;
+    color: #fff;
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo { font-size: 18px; font-weight: 600; }
+.nav-links a {
+    color: #b2bec3;
+    text-decoration: none;
+    margin-left: 24px;
+    font-size: 14px;
+}
+.nav-links a.active, .nav-links a:hover { color: #fff; }
+
+/* ===== 容器 ===== */
+.container { max-width: 1200px; margin: 24px auto; padding: 0 24px; }
+
+/* ===== 统计卡片 ===== */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.stat-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.stat-label { font-size: 13px; color: #636e72; margin-bottom: 4px; }
+.stat-value { font-size: 28px; font-weight: 700; color: #2d3436; }
+
+/* ===== 面板 ===== */
+.panel {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.panel-header h2 { font-size: 16px; font-weight: 600; }
+.hint { font-size: 13px; color: #b2bec3; }
+
+/* ===== 模块勾选 ===== */
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+.module-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid #dfe6e9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+.module-checkbox:hover { border-color: #0984e3; }
+.module-checkbox input { margin-top: 4px; }
+.module-icon { font-size: 22px; }
+.module-name { font-weight: 600; font-size: 14px; }
+.module-desc { font-size: 12px; color: #636e72; margin-top: 2px; }
+
+/* ===== 按钮 ===== */
+.actions { display: flex; gap: 8px; }
+.btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secondary { background: #dfe6e9; color: #2d3436; }
+.btn-warning { background: #fdcb6e; color: #2d3436; }
+.btn-danger { background: #e17055; color: #fff; }
+.btn:hover:not(:disabled) { opacity: 0.85; }
+
+/* ===== 表格 ===== */
+.table-wrap { overflow-x: auto; }
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.result-table th, .result-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #f1f2f6;
+}
+.result-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #636e72;
+}
+.empty-row td { text-align: center; color: #b2bec3; padding: 32px; }
+.size-cell { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.path-cell { color: #636e72; font-size: 12px; max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ===== Toast ===== */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #2d3436;
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { background: #00b894; }
+.toast.error { background: #d63031; }
+
+/* ===== 综合分析结果 ===== */
+.analyze-empty { color: #b2bec3; text-align: center; padding: 32px; font-size: 14px; }
+.sub-title { font-size: 14px; font-weight: 600; margin: 16px 0 8px; color: #2d3436; }
+.mini-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 8px; }
+.mini-table th, .mini-table td { padding: 6px 10px; text-align: left; border-bottom: 1px solid #f1f2f6; }
+.mini-table th { background: #f8f9fa; color: #636e72; font-weight: 600; }
+.row-cleanable { background: #f0fff4; }
+.row-warn { background: #fff8e1; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+.chip { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.chip-green { background: #d4edda; color: #155724; }
+.chip-orange { background: #fff3cd; color: #856404; }
+.chip-red { background: #f8d7da; color: #721c24; }
+.estimate-box {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 15px;
+}
+.estimate-box strong { color: #e17055; font-size: 20px; }
+.hint-text { color: #636e72; font-size: 12px; margin-left: 8px; }

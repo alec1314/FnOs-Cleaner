@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - fnos-cleaner{% endblock %}
+{% block content %}
+
+<!-- 统计卡片 -->
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-label">综合可清理空间</div>
+        <div class="stat-value" id="stat-estimate">—</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Docker 容器（运行/停止）</div>
+        <div class="stat-value" id="stat-containers">—</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">孤儿目录</div>
+        <div class="stat-value" id="stat-orphans">—</div>
+    </div>
+</div>
+
+<!-- 综合分析面板 -->
+<div class="panel">
+    <div class="panel-header">
+        <h2>📊 磁盘 & Docker 综合分析</h2>
+        <div class="actions">
+            <button class="btn btn-secondary" onclick="analyze()">🔬 开始分析</button>
+        </div>
+    </div>
+    <div id="analyze-result" class="analyze-empty">点击「开始分析」扫描磁盘占用和 Docker 运行状态</div>
+</div>
+
+<!-- 模块勾选 + 操作区 -->
+<div class="panel">
+    <div class="panel-header">
+        <h2>选择清理模块</h2>
+        <div class="actions">
+            <button class="btn btn-secondary" onclick="scan()">🔍 扫描</button>
+            <button class="btn btn-warning" onclick="cleanup(true)" id="btn-preview" disabled>👁 预览清理</button>
+            <button class="btn btn-danger" onclick="cleanup(false)" id="btn-apply" disabled>🗑 执行清理</button>
+        </div>
+    </div>
+    <div class="module-grid">
+        <label class="module-checkbox">
+            <input type="checkbox" value="docker_prune" checked>
+            <span class="module-icon">🐳</span>
+            <span class="module-name">Docker 资源</span>
+            <span class="module-desc">悬空镜像、停止容器、无用卷</span>
+        </label>
+        <label class="module-checkbox">
+            <input type="checkbox" value="download_residue" checked>
+            <span class="module-icon">⬇️</span>
+            <span class="module-name">下载残留</span>
+            <span class="module-desc">未完成下载、临时文件、残留种子</span>
+        </label>
+        <label class="module-checkbox">
+            <input type="checkbox" value="trash_log" checked>
+            <span class="module-icon">🗑</span>
+            <span class="module-name">回收站 + 日志</span>
+            <span class="module-desc">回收站旧文件、rotated 日志</span>
+        </label>
+        <label class="module-checkbox">
+            <input type="checkbox" value="media_cache" checked>
+            <span class="module-icon">🎬</span>
+            <span class="module-name">媒体缓存</span>
+            <span class="module-desc">缩略图、播放缓存</span>
+        </label>
+    </div>
+</div>
+
+<!-- 扫描结果表格 -->
+<div class="panel">
+    <div class="panel-header">
+        <h2>扫描结果</h2>
+        <span class="hint" id="scan-hint">点击「扫描」开始</span>
+    </div>
+    <div class="table-wrap">
+        <table class="result-table" id="result-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="check-all" checked></th>
+                    <th>类型</th>
+                    <th>名称</th>
+                    <th>大小</th>
+                    <th>路径 / 说明</th>
+                </tr>
+            </thead>
+            <tbody id="result-body">
+                <tr class="empty-row"><td colspan="5">暂无数据</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 结果提示 -->
+<div class="toast" id="toast"></div>
+
+{% endblock %}
